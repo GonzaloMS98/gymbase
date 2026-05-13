@@ -82,3 +82,10 @@ This file is persistent working context for future Codex sessions in this projec
 - Files: `supabase/migrations/20260513000000_fix_profiles_rls_recursion.sql`, `middleware.ts`, `PROJECT_CONTEXT.md`.
 - Verified: `npx tsc --noEmit` passes; `npm run lint` still fails because `eslint` is not installed.
 - Notes/Risks: the migration must be applied to the Supabase database before the runtime `42P17` error is fixed; no linked Supabase CLI project is present in this workspace.
+
+### 2026-05-13 - Login Prerender Build Fix
+
+- Changed: wrapped the `/auth/login` client content that reads `useSearchParams()` in a `Suspense` boundary so Next.js can prerender the route during production builds.
+- Files: `app/auth/login/page.tsx`, `PROJECT_CONTEXT.md`.
+- Verified: `pnpm run build` passes with network access for Google font fetching.
+- Notes/Risks: build still reports existing warnings about multiple lockfiles/root inference and the deprecated `middleware` file convention.
